@@ -1,0 +1,33 @@
+logging:
+  level:
+    org:
+      springframework:
+        security: trace
+spring:
+  security:
+    oauth2:
+      authorizationserver:
+        client:
+          client-1:
+            registration:
+              authorization-grant-types: client_credentials,authorization_code,refresh_token
+              client-authentication-methods: client_secret_basic
+              client-id: client
+              client-secret: '{bcrypt}$2a$10$8Eq5vvQ/.yW8icrTCHq6ieV05q369n9qbwXlmEwJL.sv1lWIDdyg6'
+              redirect-uris: http://localhost:8082/login/oauth2/code/spring
+              scopes: user.read,user.write,openid
+            require-authorization-consent: false
+      client:
+        registration:
+          google-idp:
+            provider: google
+            client-id: ${GOOGLE_API_CLIENT_ID}
+            client-secret: ${GOOGLE_API_CLIENT_SECRET}
+            scope: openid, https://www.googleapis.com/auth/userinfo.profile, https://www.googleapis.com/auth/userinfo.email
+            client-name: Sign in with Google
+
+        provider:
+          google:
+            user-name-attribute: email
+server:
+  port: 9000
